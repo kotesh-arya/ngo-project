@@ -7,6 +7,10 @@ import {
   Box,
   Textarea,
 } from "@mantine/core";
+import { toast, ToastContainer } from "react-toastify";
+import joinedImage from "../assets/joined.png";
+
+import "react-toastify/dist/ReactToastify.css";
 const MailForm = () => {
   const [submit, setSubmit] = useState(false);
   const [formData, setFormData] = useState({
@@ -27,32 +31,55 @@ const MailForm = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setSubmit(true);
+    if (
+      formData["entry.1759328524"] === "" ||
+      formData["entry.60803183"] === "" ||
+      formData["entry.220097671"] === "" ||
+      formData["entry.857691959"] === ""
+    ) {
+      toast.warning("Please enter valid values", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setSubmit(false);
+    } else {
+      setSubmit(true);
 
-    let url = `https://docs.google.com/forms/u/0/d/e/1FAIpQLSejEzAdpCGzmTYSq2LQTZbCpq8A4GcVUDpo0iAq9_7Ex2JMbA/formResponse?entry.1759328524=${formData["entry.1759328524"]}&entry.60803183=${formData["entry.60803183"]}&entry.220097671=${formData["entry.220097671"]}&entry.857691959=${formData["entry.857691959"]}`;
+      let url = `https://docs.google.com/forms/u/0/d/e/1FAIpQLSejEzAdpCGzmTYSq2LQTZbCpq8A4GcVUDpo0iAq9_7Ex2JMbA/formResponse?entry.1759328524=${formData["entry.1759328524"]}&entry.60803183=${formData["entry.60803183"]}&entry.220097671=${formData["entry.220097671"]}&entry.857691959=${formData["entry.857691959"]}`;
 
-    const res = await fetch(url, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
+      const res = await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+    }
   }
   return (
-    <div className="  m-auto mt-11 w-96 pr-2 pt-2">
+    <div className="  m-auto mt-11  w-96  pr-2 pt-2">
       {submit ? (
-        <div className=" border-2 border-indigo-500/75 text-indigo-600 rounded-lg p-8 m-auto mt-40 w-96">
-          Thank you! , we will get back to you soon...
+        <div className="   text-indigo-600 w-96 rounded-lg p-8 m-auto mt-8 ">
+          <img src={joinedImage} alt="Successful request sent image" />
+
+          <h1 className="text-indigo-600 font-normal ">
+            Thank you! we will get back to you soon...
+          </h1>
         </div>
       ) : (
         <form onSubmit={handleSubmit} target="_self">
           {
-            <div className="overflow-hidden flex flex-col items-center   drop-shadow-lg border-gray-500 sm:rounded-md">
+            <div className="overflow-hidden flex flex-col items-center  w-96   drop-shadow-lg border-gray-500 sm:rounded-md">
               <h1 className="text-gray-600 font-bold">
                 Player Registration Form
               </h1>
-              <div className="bg-white px-4 py-5 w-96 border-1 sm:p-6">
+              <div className="bg-white px-4 py-5 w-96 border-2 rounded-xl  shadow-lg sm:p-6">
                 <div className="grid grid-cols-6  gap-6">
                   <div className="col-span-6 ">
                     <label
@@ -97,6 +124,9 @@ const MailForm = () => {
                     </label>
                     <input
                       type="tel"
+                      placeholder="1234567891"
+                      pattern="[0-9]{10}"
+                      required
                       name="entry.220097671"
                       onChange={handleInputData("entry.220097671")}
                       value={formData["entry.220097671"]}
@@ -125,7 +155,7 @@ const MailForm = () => {
                 <div className=" px-4 py-3 text-center sm:px-6">
                   <button
                     type="submit"
-                    className="inline-flex outline-2 justify-center rounded-md border border-transparent bg-white-600 py-2 px-4 text-sm font-medium text-black hover:text-white shadow-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-150 ease-out hover:ease-in"
+                    className="inline-flex outline-2 justify-center rounded-md  border-transparent bg-white-600 py-2 px-4 text-sm font-medium text-black hover:text-white shadow-md hover:bg-red-500 focus:outline-none  transition duration-150 ease-out hover:ease-in"
                   >
                     SUBMIT
                   </button>
@@ -135,6 +165,7 @@ const MailForm = () => {
           }
         </form>
       )}
+      <ToastContainer />
     </div>
   );
 };

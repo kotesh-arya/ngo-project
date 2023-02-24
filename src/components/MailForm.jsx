@@ -8,7 +8,7 @@ import {
   Textarea,
 } from "@mantine/core";
 import { toast, ToastContainer } from "react-toastify";
-import joinedImage from "../assets/joined.png";
+import joinedImage from "../assets/join.svg";
 
 import "react-toastify/dist/ReactToastify.css";
 const MailForm = () => {
@@ -63,9 +63,9 @@ const MailForm = () => {
     }
   }
   return (
-    <div className="  m-auto mt-11  w-96  pr-2 pt-2">
+    <div className="  m-auto mt-11 sm:mt-18  w-96  pr-2 pt-2">
       {submit ? (
-        <div className="   text-indigo-600 w-96 rounded-lg p-8 m-auto mt-8 ">
+        <div className="text-indigo-600 w-96 rounded-lg p-8 m-auto mt-8 ">
           <img src={joinedImage} alt="Successful request sent image" />
 
           <h1 className="text-indigo-600 font-normal ">
@@ -89,6 +89,7 @@ const MailForm = () => {
                       First name
                     </label>
                     <input
+                      required
                       type="text"
                       name="entry.1759328524"
                       onChange={handleInputData("entry.1759328524")}
@@ -106,6 +107,7 @@ const MailForm = () => {
                       Last name
                     </label>
                     <input
+                      required
                       type="text"
                       name="entry.60803183"
                       onChange={handleInputData("entry.60803183")}
@@ -124,7 +126,7 @@ const MailForm = () => {
                     </label>
                     <input
                       type="tel"
-                      placeholder="1234567891"
+                      placeholder="XXXXXXXXXX"
                       pattern="[0-9]{10}"
                       required
                       name="entry.220097671"
@@ -143,7 +145,9 @@ const MailForm = () => {
                       Message
                     </label>
                     <Textarea
+                      required
                       name="entry.857691959"
+                      placeholder="I am interested to join because..."
                       cols="10"
                       onChange={handleInputData("entry.857691959")}
                       value={formData["entry.857691959"]}
